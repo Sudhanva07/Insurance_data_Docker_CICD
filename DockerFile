@@ -1,5 +1,5 @@
 # Which base image to use for the container python
-FROM python:3.7
+FROM python:3.11-slim
 
 #Copy "." means all the files to the working directory of the container
 COPY . /app
@@ -11,7 +11,7 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 # Make port 5000 or any port available in the server available to the world outside this container
-EXPOSE $PORT 
+EXPOSE 5000 
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["gunicorn","--bind", "0.0.0.0:5000", "app:app"]
